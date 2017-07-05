@@ -74,9 +74,7 @@ user_domain_name = {{ openstack_compute_service_compute_keystone_authtoken['user
 username = {{ openstack_compute_service_compute_keystone_authtoken['username'] }}
 
 [libvirt]
-{% if openstack_compute_service_compute_kvm_domain_type == 'qemu' %}
-virt_type = qemu
-{% endif %}
+virt_type = {{ openstack_compute_service_compute_kvm_domain_type }}
 
 [matchmaker_redis]
 
