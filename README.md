@@ -1,15 +1,17 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Role Name](#role-name)
-  - [Requirements](#requirements)
-  - [Role Variables](#role-variables)
-  - [Dependencies](#dependencies)
-    - [Ansible Roles](#ansible-roles)
-  - [Example Playbook](#example-playbook)
-  - [License](#license)
-  - [Author Information](#author-information)
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+**Table of Contents**  _generated with [DocToc](https://github.com/thlorenz/doctoc)_
+
+-   [Role Name](#role-name)
+    -   [Requirements](#requirements)
+    -   [Role Variables](#role-variables)
+    -   [Dependencies](#dependencies)
+        -   [Ansible Roles](#ansible-roles)
+    -   [Example Playbook](#example-playbook)
+    -   [License](#license)
+    -   [Author Information](#author-information)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -32,8 +34,7 @@ openstack_compute_service_compute_keystone_authtoken:
   auth_type: 'password'
   auth_uri: '{{ openstack_compute_service_compute_keystone_service_endpoint_url }}:5000'
   auth_url: '{{ openstack_compute_service_compute_keystone_service_endpoint_url }}:35357'
-  memcached_servers:
-    - 'localhost'
+  memcached_servers: '{{ openstack_compute_service_compute_memcached_servers }}'
   password: "{{ openstack_compute_service_compute_nova_user_info['password'] }}"
   project_domain_name: "{{ openstack_compute_service_compute_nova_user_info['domain_id'] }}"
   project_name: "{{ openstack_compute_service_compute_nova_user_info['project'] }}"
@@ -47,18 +48,28 @@ openstack_compute_service_compute_keystone_service_endpoint_url: 'http://{{ ansi
 openstack_compute_service_compute_management_interface: 'enp0s8'
 openstack_compute_service_compute_management_ip: "{{ hostvars[inventory_hostname]['ansible_'+openstack_compute_service_compute_management_interface]['ipv4']['address'] }}"
 
+# Define memcached servers
+openstack_compute_service_compute_memcached_servers:
+  - 127.0.0.1
+
+# Nova info
+## Nova user info
 openstack_compute_service_compute_nova_user_info:
   description: 'Nova user'
   domain_id: 'default'
   enabled: true
   name: 'nova'
   # Generate with openssl rand -hex 10
-  password: []
+  password: '{{ openstack_compute_service_compute_nova_user }}'
   project: 'service'
   role: 'admin'
   state: 'present'
 
-# placement
+## Nova user password
+openstack_compute_service_compute_nova_user: []
+
+# Placement info
+## Placement service info
 openstack_compute_service_compute_placement:
   auth_type: 'password'
   auth_url: '{{ openstack_compute_service_compute_keystone_service_endpoint_url }}:35357/v3'
@@ -68,16 +79,20 @@ openstack_compute_service_compute_placement:
   user_domain_name: "{{ openstack_compute_service_compute_placement_user_info['domain_id'] }}"
   username: "{{ openstack_compute_service_compute_placement_user_info['name'] }}"
 
+## Placement user info
 openstack_compute_service_compute_placement_user_info:
   description: 'Placement user'
   domain_id: 'default'
   enabled: true
   name: 'placement'
   # Generate with openssl rand -hex 10
-  password: []
+  password: '{{ openstack_compute_service_compute_placement_user_pass }}'
   project: 'service'
   role: 'admin'
   state: 'present'
+
+## Placement user password
+openstack_compute_service_compute_placement_user_pass: []
 
 # RabbitMQ Connection Info
 openstack_compute_service_compute_rabbit_host: 'localhost'
