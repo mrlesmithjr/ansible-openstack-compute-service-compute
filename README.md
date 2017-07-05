@@ -52,6 +52,33 @@ openstack_compute_service_compute_management_ip: "{{ hostvars[inventory_hostname
 openstack_compute_service_compute_memcached_servers:
   - 127.0.0.1
 
+# Neutron info
+openstack_compute_service_compute_neutron:
+  auth_type: 'password'
+  auth_url: '{{ openstack_compute_service_compute_keystone_service_endpoint_url }}:35357'
+  password: "{{ openstack_compute_service_compute_neutron_user_info['password'] }}"
+  project_domain_name: "{{ openstack_compute_service_compute_neutron_user_info['domain_id'] }}"
+  project_name: "{{ openstack_compute_service_compute_neutron_user_info['project'] }}"
+  url: '{{ openstack_compute_service_compute_keystone_service_endpoint_url }}:9696'
+  user_domain_name: "{{ openstack_compute_service_compute_neutron_user_info['domain_id'] }}"
+  username: "{{ openstack_compute_service_compute_neutron_user_info['name'] }}"
+
+
+## Define Neutron user info
+openstack_compute_service_compute_neutron_user_info:
+  description: 'Neutron user'
+  domain_id: 'default'
+  enabled: true
+  name: 'neutron'
+  # Generate with openssl rand -hex 10
+  password: '{{ openstack_compute_service_compute_neutron_user_pass }}'
+  project: 'service'
+  role: 'admin'
+  state: 'present'
+
+## Define Neutron user password
+openstack_compute_service_compute_neutron_user_pass: []
+
 # Nova info
 ## Nova user info
 openstack_compute_service_compute_nova_user_info:
