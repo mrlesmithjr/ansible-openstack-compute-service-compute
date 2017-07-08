@@ -94,6 +94,7 @@ openstack_compute_service_compute_placement_user_info:
 openstack_compute_service_compute_placement_user_pass: []
 
 # RabbitMQ Connection Info
-openstack_compute_service_compute_rabbit_host: 'localhost'
+openstack_compute_service_compute_rabbit_hosts:
+  - 127.0.0.1
 openstack_compute_service_compute_rabbit_pass: 'openstack'
 openstack_compute_service_compute_rabbit_user: 'openstack'

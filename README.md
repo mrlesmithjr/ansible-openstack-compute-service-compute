@@ -1,17 +1,15 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-**Table of Contents**  _generated with [DocToc](https://github.com/thlorenz/doctoc)_
-
--   [Role Name](#role-name)
-    -   [Requirements](#requirements)
-    -   [Role Variables](#role-variables)
-    -   [Dependencies](#dependencies)
-        -   [Ansible Roles](#ansible-roles)
-    -   [Example Playbook](#example-playbook)
-    -   [License](#license)
-    -   [Author Information](#author-information)
+- [Role Name](#role-name)
+  - [Requirements](#requirements)
+  - [Role Variables](#role-variables)
+  - [Dependencies](#dependencies)
+    - [Ansible Roles](#ansible-roles)
+  - [Example Playbook](#example-playbook)
+  - [License](#license)
+  - [Author Information](#author-information)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -122,7 +120,8 @@ openstack_compute_service_compute_placement_user_info:
 openstack_compute_service_compute_placement_user_pass: []
 
 # RabbitMQ Connection Info
-openstack_compute_service_compute_rabbit_host: 'localhost'
+openstack_compute_service_compute_rabbit_hosts:
+  - 127.0.0.1
 openstack_compute_service_compute_rabbit_pass: 'openstack'
 openstack_compute_service_compute_rabbit_user: 'openstack'
 ```
