@@ -9,7 +9,10 @@ force_dhcp_release=true
 log_dir=/var/log/nova
 my_ip = {{ openstack_compute_service_compute_management_ip }}
 state_path=/var/lib/nova
-transport_url = rabbit://{{ openstack_compute_service_compute_rabbit_user }}:{{ openstack_compute_service_compute_rabbit_pass }}@{{ openstack_compute_service_compute_rabbit_host }}
+{% set _rabbit_user = openstack_compute_service_compute_rabbit_user %}
+{% set _rabbit_pass = openstack_compute_service_compute_rabbit_pass %}
+transport_url = rabbit://{% for host in openstack_compute_service_compute_rabbit_hosts %}{{ _rabbit_user }}:{{ _rabbit_pass }}@{{ host }}{% if not loop.last %},{% endif %}{% endfor %}
+
 use_neutron = True
 
 [api]
@@ -154,7 +157,7 @@ username = {{ openstack_compute_service_compute_placement['username'] }}
 enabled = True
 novncproxy_base_url = {{ openstack_compute_service_compute_keystone_service_endpoint_url }}:6080/vnc_auto.html
 vncserver_listen = 0.0.0.0
-vncserver_proxyclient_address = $my_ip
+vncserver_proxyclient_address = {{ openstack_compute_service_compute_management_ip }}
 
 [workarounds]
 
